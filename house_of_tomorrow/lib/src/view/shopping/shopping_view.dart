@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:house_of_tomorrow/src/service/theme_service.dart';
 import 'package:house_of_tomorrow/theme/component/bottom_sheet/setting_bottom_sheet.dart';
 import 'package:house_of_tomorrow/theme/component/button/button.dart';
+import 'package:house_of_tomorrow/theme/component/input_field.dart';
 import 'package:house_of_tomorrow/util/lang/generated/l10n.dart';
-import 'package:provider/provider.dart';
 
 class ShoppingView extends StatelessWidget {
   const ShoppingView({super.key});
@@ -21,6 +20,7 @@ class ShoppingView extends StatelessWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
+                // isScrollControlled: true, // 전체 시트 채우기 현재 기능에선 불필요
                 builder: (context) {
                   //화면에 보여질 위젯
                   return SettingBottomSheet();
@@ -30,11 +30,28 @@ class ShoppingView extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: context.read<ThemeService>().toggleTheme,
-          child: Text("Toggle Theme", style: context.typo.headline6),
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              children: [
+                ///검색
+                Expanded(
+                  child: InputField(
+                    hint: S
+                        .current
+                        .searchProduct, //다국어는 언어마다 달라져서 const를 붙일 수 없음.
+                  ),
+                ), // Row위젯 안에 textField가있을 시 무제한으로 늘어나는 어류를 Expanded를 안에 넣어서 해결
+                const SizedBox(width: 16),
+
+                ///검색 버튼
+                Button(icon: 'search', onPressed: () {}),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
