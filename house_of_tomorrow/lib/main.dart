@@ -4,6 +4,7 @@ import 'package:house_of_tomorrow/src/service/lang_service.dart';
 import 'package:house_of_tomorrow/src/service/theme_service.dart';
 import 'package:house_of_tomorrow/src/view/shopping/shopping_view.dart';
 import 'package:house_of_tomorrow/util/lang/generated/l10n.dart';
+import 'package:house_of_tomorrow/util/route_path.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
           .watch<LangService>()
           .locale, // 앱 내부에서 사용하도록 접근, 한국어, 영어 변환이 있기 떄문에 watch 사용
       theme: context.themeService.themeData, //watch이미 해줘서 다시 watch로 접근할 필요가 없음.
-      home: const ShoppingView(),
+      initialRoute: RoutePath.shopping, //초기 페이지
+      onGenerateRoute: RoutePath.onGenerateRoute, //get
     );
   }
 }
