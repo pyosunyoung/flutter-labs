@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:house_of_tomorrow/src/model/cart_item.dart';
 import 'package:house_of_tomorrow/src/model/product.dart';
+import 'package:house_of_tomorrow/src/service/cart_service.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_bottom_sheet.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_color_preview.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_desc.dart';
+import 'package:house_of_tomorrow/theme/component/cart_button.dart';
 import 'package:house_of_tomorrow/theme/component/color_picker.dart';
 import 'package:house_of_tomorrow/theme/component/pop_button.dart';
 import 'package:house_of_tomorrow/util/lang/generated/l10n.dart';
+import 'package:provider/provider.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({super.key, required this.product});
@@ -39,6 +43,18 @@ class _ProductViewState extends State<ProductView> {
     });
   }
 
+  /// 카트에 상품 추가
+  void onAddToCartPressed() {
+    final CartService cartService = context.read();
+    final CartItem newCartItem = CartItem(
+      product: widget.product,
+      colorIndex: colorIndex,
+      count: count,
+      isSelected: true,
+    );
+    cartService.add(newCartItem);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +62,7 @@ class _ProductViewState extends State<ProductView> {
         title: Text(S.current.product),
         leading: const PopButton(),
         titleSpacing: 0,
+        actions: [CartButton()],
       ),
       body: Column(
         children: [
@@ -85,7 +102,7 @@ class _ProductViewState extends State<ProductView> {
             count: count,
             product: widget.product,
             onCountChanged: onCountChanged,
-            onAddToCartPressed: () {},
+            onAddToCartPressed: onAddToCartPressed,
           ),
         ],
       ),
