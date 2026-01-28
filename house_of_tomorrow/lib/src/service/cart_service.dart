@@ -29,6 +29,7 @@ class CartService with ChangeNotifier {
         return entry.key == selectedIndex ? newCartItem : entry.value;
       },
     ).toImmutable(); //전달 받은 key와 선택된 indeㅌ가 같으면 newCartItem에 넣어줌. 아니면 기존 value 유지.
+    notifyListeners();
   }
 
   /// 상품 삭제
