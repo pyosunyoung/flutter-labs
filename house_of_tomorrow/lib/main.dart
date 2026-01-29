@@ -20,12 +20,24 @@ void main() {
   );
 }
 
+// GlobalKey를 이용하면 특정 StatefulWidget의 BuildContext를 가져올 수 있습니다.
+// MaterialApp은 화면이 쌓인 상태를 NavigatorState로 가지고 있으며, 해당 상태의 BuildContext를 GlobalKey로 가져와 활용하도록 하겠습니다.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey(); // 어디서든 이 키에 접근하기 위해 Static 붙임
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
+      builder: (context, child) {
+        //build를 통해 Overlay를 추가시켜서 No Overlay widget found 에러 해결
+        return Overlay(
+          initialEntries: [OverlayEntry(builder: (context) => child!)],
+        );
+      },
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

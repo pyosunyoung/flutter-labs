@@ -35,7 +35,9 @@ class CartService with ChangeNotifier {
   /// 상품 삭제
   void delete(List<CartItem> deleteList) {
     cartItemList = cartItemList.where((cartItem) {
-      return deleteList.contains(cartItem); // deleteList에 들어있지 않은 cartItem만 반환.
+      return !deleteList.contains(
+        cartItem,
+      ); // deleteList에 들어있지 않은 cartItem만 반환.
     }).toImmutable();
     notifyListeners();
   }
