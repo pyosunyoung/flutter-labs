@@ -3,6 +3,7 @@ import 'package:house_of_tomorrow/src/model/product.dart';
 import 'package:house_of_tomorrow/src/view/cart/cart_view.dart';
 import 'package:house_of_tomorrow/src/view/product/product_view.dart';
 import 'package:house_of_tomorrow/src/view/shopping/shopping_view.dart';
+import 'package:house_of_tomorrow/theme/component/constrained_screen.dart';
 
 abstract class RoutePath {
   //페이지 이름들
@@ -27,6 +28,8 @@ abstract class RoutePath {
         break;
     }
 
-    return MaterialPageRoute(builder: (context) => page);
+    return MaterialPageRoute(
+      builder: (context) => ConstrainedScreen(child: page),
+    ); // 이렇게 route에서 ConstraindedScreen을 감싸줘서 모든 위젯의 페이지에 크기 제약을 줄 수 있게됨.
   }
 }

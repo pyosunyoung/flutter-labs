@@ -5,6 +5,7 @@ import 'package:house_of_tomorrow/src/service/cart_service.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_bottom_sheet.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_color_preview.dart';
 import 'package:house_of_tomorrow/src/view/product/widget/product_desc.dart';
+import 'package:house_of_tomorrow/src/view/product/widget/product_layout.dart';
 import 'package:house_of_tomorrow/theme/component/cart_button.dart';
 import 'package:house_of_tomorrow/theme/component/color_picker.dart';
 import 'package:house_of_tomorrow/theme/component/pop_button.dart';
@@ -66,47 +67,42 @@ class _ProductViewState extends State<ProductView> {
         titleSpacing: 0,
         actions: [CartButton()],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            // 하단 bottomSheet는 하단에 고정되어지게 설정하고 여기 스크롤 뷰는 스크롤 가능하게 하기 위해 Column안에 expanded로 설정.
-            child: SingleChildScrollView(
-              //작은 화면에서 넘칠 수 있기 때문에 적용
-              padding: const EdgeInsets.symmetric(vertical: 32),
-              child: Wrap(
-                runSpacing: 32,
-                alignment: WrapAlignment.center,
-                children: [
-                  ///productColorPreview
-                  ProductColorPreview(
-                    colorIndex: colorIndex,
-                    product: widget.product,
-                  ),
-
-                  ///ColorPicker
-                  ColorPicker(
-                    colorIndex: colorIndex,
-                    colorList: widget.product.productColorList.map((e) {
-                      return e.color; // Product Color type을 color로 변환시켜주는 작업
-                    }).toList(),
-                    onColorSelected: onColorIndexChanged,
-                  ),
-
-                  ///productDesc
-                  ProductDesc(product: widget.product),
-                ],
+      body: ProductLayout(
+        // 반응형 UI를 위한 ProductLayout적용
+         // 하단 bottomSheet는 하단에 고정되어지게 설정하고 여기 스크롤 뷰는 스크롤 가능하게 하기 위해 Column안에 expanded로 설정.
+        productInfo: SingleChildScrollView(
+          //작은 화면에서 넘칠 수 있기 때문에 적용
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Wrap(
+            runSpacing: 32,
+            alignment: WrapAlignment.center,
+            children: [
+              ///productColorPreview
+              ProductColorPreview(
+                colorIndex: colorIndex,
+                product: widget.product,
               ),
-            ),
-          ),
 
-          ///ProductBottomSheet
-          ProductBottomSheet(
-            count: count,
-            product: widget.product,
-            onCountChanged: onCountChanged,
-            onAddToCartPressed: onAddToCartPressed,
+              ///ColorPicker
+              ColorPicker(
+                colorIndex: colorIndex,
+                colorList: widget.product.productColorList.map((e) {
+                  return e.color; // Product Color type을 color로 변환시켜주는 작업
+                }).toList(),
+                onColorSelected: onColorIndexChanged,
+              ),
+
+              ///productDesc
+              ProductDesc(product: widget.product),
+            ],
           ),
-        ],
+        ),
+        productBottomSheet: ProductBottomSheet(
+          count: count,
+          product: widget.product,
+          onCountChanged: onCountChanged,
+          onAddToCartPressed: onAddToCartPressed,
+        ),
       ),
       //widget.이 붙은것은 생성자를 통해 넘겨받은 값을 여기서 사용할 수 있음.
     );

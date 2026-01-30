@@ -3,6 +3,7 @@ import 'package:house_of_tomorrow/src/model/cart_item.dart';
 import 'package:house_of_tomorrow/src/service/theme_service.dart';
 import 'package:house_of_tomorrow/theme/component/bottom_sheet/base_bottom_sheet.dart';
 import 'package:house_of_tomorrow/theme/component/button/button.dart';
+import 'package:house_of_tomorrow/theme/res/layout.dart';
 import 'package:house_of_tomorrow/util/lang/generated/l10n.dart';
 
 class CartBottomSheet extends StatelessWidget {
@@ -20,7 +21,13 @@ class CartBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseBottomSheet(
-      padding: EdgeInsets.only(top: 32, left: 16, right: 16, bottom: 16),
+      isRoundAll: context.layout(false, desktop: true),
+      padding: EdgeInsets.only(
+        top: context.layout(32, desktop: 16), // 기기 사이즈에 따른 반응형 적용
+        left: 16,
+        right: 16,
+        bottom: 16,
+      ),
       child: Wrap(
         runSpacing: 16,
         children: [
